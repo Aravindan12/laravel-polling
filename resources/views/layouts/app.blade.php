@@ -32,5 +32,11 @@
                 {{ $slot }}
             </main>
         </div>
+        <script src="{{asset('browser.js')}}"></script>
+        <script>
+            new PublishForm(document.forms.publish, 'publish');
+            // random url parameter to avoid any caching issues
+            new SubscribePane(document.getElementById('subscribe'), 'subscribe?random=' + Math.random());
+        </script>
     </body>
 </html>

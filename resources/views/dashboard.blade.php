@@ -13,5 +13,14 @@
                 </div>
             </div>
         </div>
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <form name="publish">
+                <input type="text" name="message" />
+                <input type="submit" value="Send" />
+              </form>
+              
+              <div id="subscribe">
+              </div>
+        </div>
     </div>
 </x-app-layout>
