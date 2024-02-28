@@ -9,7 +9,7 @@
 
 ## About Laravel - polling
 
-Laravel polling
+Laravel polling - It used laravel-breeze as starter kit, implemented long-polling method to replace socket.io.
 
 - step-1 - clone it
 - step-2 - change DB_DATABASE,DB_USERNAME,DB_PASSWORD in env 
