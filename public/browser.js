@@ -1,18 +1,19 @@
 // Sending messages, a simple POST
 function PublishForm(form, url) {
 
-    function sendMessage(message) {
+    function sendMessage(message, id) {
       fetch(url, {
         method: 'POST',
-        body: message
+        body: JSON.stringify({message:message, id : id})
       });
     }
   
     form.onsubmit = function() {
       let message = form.message.value;
+      let id = form.id.value;
       if (message) {
         form.message.value = '';
-        sendMessage(message);
+        sendMessage(message, id);
       }
       return false;
     };

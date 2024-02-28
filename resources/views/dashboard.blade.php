@@ -16,11 +16,11 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <form name="publish">
                 <input type="text" name="message" />
+                <input type="hidden" name="id" id="id" value="{{auth()->user()->id}}" />
                 <input type="submit" value="Send" />
-              </form>
-              
-              <div id="subscribe">
-              </div>
+            </form>
+            <div id="subscribe">
+            </div>
         </div>
     </div>
 </x-app-layout>

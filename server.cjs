@@ -7,12 +7,11 @@ let fileServer = new statics.Server('.');
 
 let subscribers = Object.create(null);
 
-function onSubscribe(req, res) {
-  console.log(4)
-  let id = Math.random();
+function onSubscribe(req, res, id) {
 
   res.setHeader('Content-Type', 'text/plain;charset=utf-8');
   res.setHeader("Cache-Control", "no-cache, must-revalidate");
+  res.setHeader("Access-Control-Allow-Origin", "*");
 
   subscribers[id] = res;
 
@@ -22,37 +21,34 @@ function onSubscribe(req, res) {
 
 }
 
-function publish(message) {
-  console.log(7)
-  for (let id in subscribers) {
-    let res = subscribers[id];
+function publish(message, subId) {
+    let res = subscribers[subId];
     res.end(message);
-  }
 
-  subscribers = Object.create(null);
+  // subscribers = Object.create(null);
 }
 
 function accept(req, res) {
-  console.log(2)
   let urlParsed = url.parse(req.url, true);
 
   // new client wants messages
   if (urlParsed.pathname == '/subscribe') {
-  console.log(3)
-    onSubscribe(req, res);
+    onSubscribe(req, res, urlParsed.query.id);
     return 400;
   }
 
   // sending a message
   if (urlParsed.pathname == '/publish' && req.method == 'POST') {
-  console.log(6)
+  res.setHeader("Access-Control-Allow-Origin", "*");
     // accept POST
     req.setEncoding('utf8');
     let message = '';
+    let subId = '';
     req.on('data', function(chunk) {
-      message += chunk;
+      subId = JSON.parse(chunk).id
+      message += JSON.parse(chunk).message;
     }).on('end', function() {
-      publish(message); // publish it to everyone
+      publish(message, subId); // publish it to everyone
       res.end("ok");
     });
 
@@ -74,7 +70,6 @@ function close() {
 // -----------------------------------
 
 if (!module.parent) {
-  console.log(1)
   http.createServer(accept).listen(8081);
   console.log('Server running on port 8080');
 } else {

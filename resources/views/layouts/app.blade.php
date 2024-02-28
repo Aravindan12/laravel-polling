@@ -34,9 +34,11 @@
         </div>
         <script src="{{asset('browser.js')}}"></script>
         <script>
-            new PublishForm(document.forms.publish, 'publish');
+            let id = document.getElementById('id').value;
+            console.log(id);
+            new PublishForm(document.forms.publish, 'http://localhost:8081/publish');
             // random url parameter to avoid any caching issues
-            new SubscribePane(document.getElementById('subscribe'), 'subscribe?random=' + Math.random());
+            new SubscribePane(document.getElementById('subscribe'), 'http://localhost:8081/subscribe?id=' + id);
         </script>
     </body>
 </html>
